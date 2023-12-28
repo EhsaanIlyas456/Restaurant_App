@@ -53,6 +53,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
             // Display delivery address
             Text(deliveryAddress),
             SizedBox(height: 20),
+            // Total amount
+            Text(
+              'Total: \$${calculateTotalAmount().toStringAsFixed(2)}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
             // Button to proceed to payment
             ElevatedButton(
               onPressed: () {
@@ -66,6 +72,15 @@ class _CheckoutPageState extends State<CheckoutPage> {
       ),
     );
   }
+
+  // Function to calculate the total amount in the cart
+  double calculateTotalAmount() {
+    double total = 0;
+    for (var item in cartItems) {
+      total += item.price * item.quantity;
+    }
+    return total;
+  }
 }
 
 // Model class for cart items
@@ -75,10 +90,4 @@ class CartItem {
   final int quantity;
 
   CartItem({required this.name, required this.price, required this.quantity});
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: CheckoutPage(),
-  ));
 }
